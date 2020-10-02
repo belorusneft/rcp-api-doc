@@ -6,7 +6,7 @@
 
 ## Авторизация
 
-`POST`: <https://ssl.beloil.by/identity/connect/token>
+`POST`: <https://belorusneft.by/identity/connect/token>
 
 Заголовки
 
