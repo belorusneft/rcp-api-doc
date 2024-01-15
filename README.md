@@ -206,11 +206,11 @@ HTTP статусы ответа
 | `kapschCard`          | `boolean` |   Yes    | `true` - топливная карта карта является картой счета для BELTOLL, `false` - не является
 | `kapschContract`      | `boolean` |   Yes    | `true` - топливная карта является картой договора для BELTOLL, `false` - не является
 | `user`                | `string`  |   Yes    | Логин пользователя, который сделал изменения в картах
-| `gasRemoteFill`       | `boolean` | Флаг удаленной заправки газом. `true` - разрешена, `false` - запрещена
-| `gasBottleVolume`     | `integer` | Объем газового баллона
-| `gasBottleExaminationDate` | `datetime` | Дата освидетельствования баллона
-| `gasBottleNextExaminationDate` | `datetime` | Дата следующего освидетельствования баллона
-| `gasRulesAccepted`   | `boolean` | Флаг ознакомления с правилами
+| `gasRemoteFill`       | `boolean` | Yes | Флаг удаленной заправки газом. `true` - разрешена, `false` - запрещена
+| `gasBottleVolume`     | `integer` | Yes | Объем газового баллона
+| `gasBottleExaminationDate` | `datetime` | Yes | Дата освидетельствования баллона
+| `gasBottleNextExaminationDate` | `datetime` | Yes | Дата следующего освидетельствования баллона
+| `gasRulesAccepted`   | `boolean` | Yes | Флаг ознакомления с правилами
 
 Кодировка группы нефтепродуктов в поле `oilGroupSet`
 | Бит | Группа
