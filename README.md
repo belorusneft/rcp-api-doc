@@ -78,7 +78,7 @@ HTTP статусы ответа
 
 Структура ответа
 
-| Field                 | Type      | Discription
+| Key                   | Type      | Discription
 |-----------------------|-----------|-------------
 | `contrCode`           | `integer` | Номер договора
 | `cardCode`            | `integer` | Номер топливной карты
@@ -101,6 +101,27 @@ HTTP статусы ответа
 | `dosePermittedAmount` | `decimal` | Разрешенная доза в деньгах
 | `kapschCard`          | `boolean` | `true` - топливная карта является картой счета для BELTOLL, `false` - не является
 | `kapschContract`      | `boolean` | `true` - топливная карта является картой договора для BELTOLL, `false` - не является
+| `gasRemoteFill`       | `boolean` | Флаг удаленной заправки газом. `true` - разрешена, `false` - запрещена
+| `gasBottleVolume`     | `integer` | Объем газового баллона
+| `gasBottleExaminationDate` | `datetime` | Дата освидетельствования баллона
+| `gasBottleNextExaminationDate` | `datetime` | Дата следующего освидетельствования баллона
+| `gasRulesAccepted`   | `boolean` | Флаг ознакомления с правилами
+| `pinCode`            | `integer` | Пинкод карты
+
+Кодировка группы нефтепродуктов ключа `oilGroupSet`
+| Бит | Группа
+|-----|--------
+| 0   | ДТ
+| 1   | ДТЗ класс 2
+| 2   | АИ-92
+| 3   | АИ-95
+| 4   | АИ-98
+| 5   | АИ-100
+| 6   | Керосин
+| 7   | Газ
+| 8   | Другие группы
+
+Например, разрешаем ДТ - 0-ой бит поля `oilGroupSet` = 1, и т.д.
 
 Пример успешного ответа
 
@@ -130,7 +151,13 @@ HTTP статусы ответа
         "dosePermitted": 9,
         "dosePermittedAmount": 16.02,
         "kapschCard": false,
-        "kapschContract": false
+        "kapschContract": false,
+        "gasRemoteFill" : true,
+        "gasBottleVolume": 45,
+        "gasBottleExaminationDate": "2023-01-11T00:00:00",
+        "gasBottleNextExaminationDate":  "2023-01-11T00:00:00",
+        "gasRulesAccepted": true,
+        "pinCode": 1234 
     }
 ]
 ```
@@ -154,7 +181,7 @@ HTTP статусы ответа
 
 Структура запроса
 
-| Field                 | Type      | Required | Discription
+| Key                   | Type      | Required | Discription
 |-----------------------|-----------|:--------:|------------
 | `contrCode`           | `integer` |   Yes    | Номер договора
 | `cardCode`            | `integer` |   Yes    | Номер топливной карты
@@ -178,36 +205,62 @@ HTTP статусы ответа
 | `dosePermittedAmount` | `decimal` |   Yes    | Разрешенная доза в деньгах
 | `kapschCard`          | `boolean` |   Yes    | `true` - топливная карта карта является картой счета для BELTOLL, `false` - не является
 | `kapschContract`      | `boolean` |   Yes    | `true` - топливная карта является картой договора для BELTOLL, `false` - не является
+| `user`                | `string`  |   Yes    | Логин пользователя, который сделал изменения в картах
+| `gasRemoteFill`       | `boolean` | Флаг удаленной заправки газом. `true` - разрешена, `false` - запрещена
+| `gasBottleVolume`     | `integer` | Объем газового баллона
+| `gasBottleExaminationDate` | `datetime` | Дата освидетельствования баллона
+| `gasBottleNextExaminationDate` | `datetime` | Дата следующего освидетельствования баллона
+| `gasRulesAccepted`   | `boolean` | Флаг ознакомления с правилами
+
+Кодировка группы нефтепродуктов в поле `oilGroupSet`
+| Бит | Группа
+|-----|--------
+| 0   | ДТ
+| 1   | ДТЗ класс 2
+| 2   | АИ-92
+| 3   | АИ-95
+| 4   | АИ-98
+| 5   | АИ-100
+| 6   | Керосин
+| 7   | Газ
+| 8   | Другие группы
+
+Например, разрешаем ДТ - 0-ой бит ключа `oilGroupSet` = 1, и т.д.
 
 Пример запроса
 
 ```json
 [
     {
-         "contrCode": 6800606,
-         "cardCode": 650183695,
-         "monthNorm": 6169,
-         "dayNorm": 199,
-         "dayNormAmount": 350,
-         "oilGroupSet": [
+        "contrCode": 6800606,
+        "cardCode": 650183695,
+        "monthNorm": 6169,
+        "dayNorm": 199,
+        "dayNormAmount": 350,
+        "oilGroupSet": [
             {
                 "code": 1,
                 "name": "ДТ"
             }
         ],
-         "transitFl": true,
-         "goodsFl": true,
-         "transitGoodsFl": true,
-         "status": 1,
-         "actionDate": "2070-01-01T00:00:00",
-         "division": 0,
-         "driver": "",
-         "carNum": "",
-         "priority": 0,
-         "dosePermitted": 100,
-         "dosePermittedAmount": 175,
-         "kapschCard": false,
-         "kapschContract": false
+        "transitFl": true,
+        "goodsFl": true,
+        "transitGoodsFl": true,
+        "status": 1,
+        "actionDate": "2070-01-01T00:00:00",
+        "division": 0,
+        "driver": "",
+        "carNum": "",
+        "priority": 0,
+        "dosePermitted": 100,
+        "dosePermittedAmount": 175,
+        "kapschCard": false,
+        "kapschContract": false,
+        "gasRemoteFill" : true,
+        "gasBottleVolume": 45,
+        "gasBottleExaminationDate": "2023-01-11T00:00:00",
+        "gasBottleNextExaminationDate":  "2023-01-11T00:00:00",
+        "gasRulesAccepted": true
     }
 ]
 ```
@@ -234,7 +287,7 @@ HTTP статусы ответа
 
 Структура ответа
 
-| Field                | Type      | Discription
+| Key                  | Type      | Discription
 |----------------------|-----------|------------
 | `loanFlag`           | `boolean` | Признак наличия коммерческого займа `false` - нет, `true` - есть
 | `contractIssuerId`   | `integer` | Код эмитента
@@ -247,6 +300,16 @@ HTTP статусы ответа
 | `phone`              | `string`  | Номер телефона
 | `internetChangeCard` | `boolean` | Флаг разрешения менять свойства топливных карт в кабинете `false` - нельзя, `true` - можно
 | `paymentPlatonFlag`  | `boolean` | Флаг разрешения осуществлять платежи в системе Платон `false` - нельзя, `true` - можно
+| `minimumBalanceNoticeFlag` | `boolean` | Признак уведомления о минимальном балансе
+| `minimumBalanceSumm`       | `double`  | Сумма минимального баланса
+| `mDMPartnerCode`    | `string`  | Код МДМ партнера
+| `virtualCardCost`   | `decimal` | Стоимость виртуальной карты
+| `expressFlag`       | `integer` | Признак использования экспресс-договора. `0` - не используется, `1` - используется
+| `isElectronicCheck` | `boolean` | Cогласие на получение электронных чеков
+| `noReminderElectronicCheck` | `boolean` | флаг напоминания вывода уведомлений о согласии на электронные чеки
+| `gasRemoteFill`     | `boolean` | флаг наличия доп. соглашения на самостоятельную заправку газом
+| `statusCode`        | `integer` | Код состояния договора
+| `isGasEquipment`    | `boolean` | Флаг наличия газобаллонного оборудования. `true` - есть, `false` - нет
 
 Пример успешного ответа
 
@@ -262,7 +325,17 @@ HTTP статусы ответа
     "effectPrice": 9299.20,
     "phone": "1122334455",
     "internetChangeCard": true,
-    "paymentPlatonFlag": true
+    "paymentPlatonFlag": true,
+    "minimumBalanceNoticeFlag": true,
+    "minimumBalanceSumm`": 4.23,
+    "mDMPartnerCode": "234",
+    "virtualCardCost": 3.45,
+    "expressFlag": 1,
+    "isElectronicCheck": 1, 
+    "noReminderElectronicCheck": true,
+    "gasRemoteFill": true,
+    "statusCode": 1,
+    "isGasEquipment": true
 }
 ```
 
@@ -286,7 +359,7 @@ HTTP статусы ответа
 
 Структура ответа
 
-| Field                | Type      | Discription
+| Key                  | Type      | Discription
 |----------------------|-----------|------------
 | `loanFlag`           | `boolean` | Флаг наличия коммерческого займа `false` - нет, `true` - есть
 | `contractIssuerId`   | `integer` | Код эмитента
@@ -299,8 +372,18 @@ HTTP статусы ответа
 | `phone`              | `string`  | Номер телефона
 | `internetChangeCard` | `boolean` | Флаг разрешения менять свойства карт в кабинете `false` - нельзя, `true` - можно
 | `paymentPlatonFlag`  | `boolean` | Флаг разрешения осуществлять платежи в системе Платон `false` - нельзя, `true` - можно
+| `minimumBalanceNoticeFlag` | `boolean` | Признак уведомления о минимальном балансе
+| `minimumBalanceSumm` | `double` | Сумма минимального баланса
+| `mDMPartnerCode` | `string` | Код МДМ партнера
+| `virtualCardCost` | `decimal` | Стоимость виртуальной карты
+| `expressFlag` | `int` | Признак использования экспресс-договора. `0` - не используется, `1` - используется
+| `isElectronicCheck` | `boolean` | Cогласие на получение электронных чеков
+| `noReminderElectronicCheck` | `boolean` | флаг напоминания вывода уведомлений о согласии на электронные чеки
+| `gasRemoteFill` | `boolean` | флаг наличия доп. соглашения на самостоятельную заправку газом
+| `statusCode` | `integer` | Код состояния договора
+| `isGasEquipment` | `boolean` | Флаг наличия газобаллонного оборудования. `true` - есть, `false` - нет
 
-Пример успешного овета
+Пример успешного ответа
 
 ```json
 {
@@ -314,7 +397,17 @@ HTTP статусы ответа
     "effectPrice": 9299.20,
     "phone": "1122334455",
     "internetChangeCard": true,
-    "paymentPlatonFlag": true
+    "paymentPlatonFlag": true,
+    "minimumBalanceNoticeFlag": true,
+    "minimumBalanceSumm`": 4.23,
+    "mDMPartnerCode": "234",
+    "virtualCardCost": 3.45,
+    "expressFlag": 1,
+    "isElectronicCheck": 1, 
+    "noReminderElectronicCheck": true,
+    "gasRemoteFill": true,
+    "statusCode": 1,
+    "isGasEquipment": true
 }
 ```
 
@@ -338,29 +431,33 @@ HTTP статусы ответа
 
 Структура запроса
 
-| Field             | Type      | Required | Description
+| Key               | Type      | Required | Description
 |-------------------|-----------|:--------:|------------
 | `startDate`       | `date`    |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
 | `endDate`         | `date`    |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
 | `cardNumber`      | `integer` |   Yes    | Номер топливной карты. Если значение меньше либо равно нулю, тогда отчет по всем топливным картам договора
 | `subDivisnNumber` | `integer` |   Yes    | Номер подразделения. Если меньше нуля, тогда по всем подразделениям договора
 | `flChoice`        | `integer` |   Yes    | Опция выбора информации: `1` - топливо, `2` - оплата дорог, `4` - иные товары (услуги), `3` - топливо и оплата дорог, `5` - топливо и иные товары (услуги), `6` - оплата дорог и иные товары (услуги), `7` - топливо, оплата дорог и иные товары (услуги)
+| `AzsCode`         | `integer` |   Yes    | Номер АЗС. Значение `-1` - любой номер
+| `EmtCodeFrm`      | `integer` |   Yes    | Код эмитента. Значение `-1` - любой эмитент
 
 Пример запроса
 
 ```json
 {
- "startDate": "11-01-2019",
- "endDate": "11-30-2020",
- "cardNumber": 0,
- "subDivisnNumber": -1,
- "flChoice": 2
+    "startDate": "11-01-2019",
+    "endDate": "11-30-2020",
+    "cardNumber": 0,
+    "subDivisnNumber": -1,
+    "flChoice": 2,
+    "AzsCode" : -1,
+    "EmtCodeFrm": -1
 }
 ```
 
 Структура ответа
 
-| Field                        | Type     | Description
+| Key                          | Type     | Description
 |------------------------------|----------|------------
 | `cardList`                   | `array`    | Массив топливных карт
 | `cardNumber`                 | `integer`  | Номер топливной карты
@@ -386,7 +483,14 @@ HTTP статусы ответа
 | `operCode`                   | `integer`  | Код операции (`2` - продажа, `5` - возврат) (не используется)
 | `carNum`                     | `string`   | Государственный регистрационный знак автомобиля
 | `driverName`                 | `string`   | ФИО водителя
+| `docNumber`                  | `integer`  | Номер чека
+| `emtCodeFrm`                 | `integer`  | Kод эмитента-владельца ТО
 | `total`                      | `object`   | Блок итогов по отчету
+| `total`/`subdivision`        | `integer`  | Номер подразделения
+| `total`/`dateTimeIssue`      | `datetime` | Дата и время отпуска
+| `total`/`productType`        | `integer`  | Тип ТМЦУ (`1` - нефтепродукты, `2` – газ, `3` - товар, `4` - услуги, `5` - дорожные сборы)
+| `total`/`productCode`        | `integer`  | Код ТМЦУ
+| `total`/`productName`        | `string`   | Наименование ТМЦУ
 | `total`/`productQuantity`    | `integer`  | Код ТМЦУ
 | `total`/`productCost`        | `decimal`  | Стоимость с НДС со скидкой
 | `total`/`vatAmount`          | `decimal`  | Сумма НДС
@@ -395,6 +499,14 @@ HTTP статусы ответа
 | `total`/`costServiceWithVAT` | `decimal`  | Стоимость услуг с НДС
 | `total`/`costTotalWithVAT`   | `decimal`  | Стоимость всего с НДС
 | `total`/`vatAmountTotal`     | `decimal`  | Всего сумма НДС
+| `total`/`ownerName`          | `string`   | Наименование владельца АЗС
+| `total`/`azsNumber`          | `integer`  | Номер АЗС
+| `total`/`trkNumber`          | `integer`  | Номер ТРК/номер секции
+| `total`/`operCode`           | `integer`  | Код операции (`2` - продажа, `5` - возврат) (не используется)
+| `total`/`carNum`             | `string`   | Государственный регистрационный знак автомобиля
+| `total`/`driverName`         | `string`   | ФИО водителя
+| `total`/`docNumber`          | `integer`  | Номер чека
+| `total`/`emtCodeFrm`         | `integer`  | Kод эмитента-владельца ТО
 
 Пример успешного ответа
 
@@ -425,11 +537,20 @@ HTTP статусы ответа
                     "trkNumber": 0,
                     "operCode": 2,
                     "carNum": "",
-                    "driverName": ""
+                    "driverName": "",
+                    "docNumber": 1234,
+                    "emtCodeFrm": 370
                 },
             ],
     "total": {
+        "subdivision": 0,
+        "dateTimeIssue": "0001-01-01T00:00:00",
+        "productType": 0,
+        "productCode": 0,
+        "productName": null,        
         "productQuantity": 14.000000,
+        "productMeasure": null,
+        "productUnitPrice": 0.0,
         "productCost": 1640.63,
         "vatAmount": 0.00,
         "discountWithVAT": 0.00,
@@ -437,6 +558,14 @@ HTTP статусы ответа
         "costServiceWithVAT": 8.22,
         "costTotalWithVAT": 1648.85,
         "vatAmountTotal": 1.39,
+        "ownerName": null,
+        "azsNumber": 0,
+        "trkNumber": 0,
+        "operCode": 0,
+        "carNum": null,
+        "driverName": null,
+        "docNumber": 0,
+        "emtCodeFrm": 0
     }
 }
 ```
@@ -461,7 +590,7 @@ HTTP статусы ответа
 
 Структура запроса
 
-| Field             | Type      | Required | Description
+| Key               | Type      | Required | Description
 |-------------------|-----------|:--------:|------------
 | `startDate`       | `date`    |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
 | `endDate`         | `date`    |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
@@ -483,7 +612,7 @@ HTTP статусы ответа
 
 Структура ответа
 
-| Field                                                      | Type      | Description
+| Key                                                        | Type      | Description
 |------------------------------------------------------------|-----------|------------
 | `subdivision`                                              | `array`   | Массив подразделений
 | `divisionNumber`                                           | `integer` | Номер подразделения
@@ -504,9 +633,16 @@ HTTP статусы ответа
 | `costTotalWithVAT`                                         | `decimal` | Стоимость всего с НДС
 | `vatAmountTotal`                                           | `decimal` | Всего сумма НДС
 | `cardList`/`total`                                         | `object`  | Итоги по топливной карте
+| `cardList`/`total`/`subdivision`                           | `integer` | Номер подразделения
+| `cardList`/`total`/`productCode`                           | `integer` | Код товара
+| `cardList`/`total`/`productType`                           | `integer` | Тип товара
+| `cardList`/`total`/`productName`                           | `string`  | Наименование товара
 | `cardList`/`total`/`productQuantity`                       | `decimal` | Всего по топливной карте количество ТМЦУ
+| `cardList`/`total`/`productUnitPrice`                      | `decimal` | Цена единицы товара с НДС со скидкой
+| `cardList`/`total`/`productCost`                           | `decimal` | Стоимость товара с НДС со скидкой
 | `cardList`/`total`/`vatAmount`                             | `decimal` | Всего по топливной карте сумма НДС
 | `cardList`/`total`/`discountWithVAT`                       | `decimal` | Всего по топливной карте cкидка с НДС
+| `cardList`/`total`/`percentageForServices`                 | `decimal` | Процент за услуги
 | `cardList`/`total`/`costServiceWithVAT`                    | `decimal` | Всего по топливной карте стоимость услуг с НДС
 | `cardList`/`total`/`costTotalWithVAT`                      | `decimal` | Всего по топливной карте cтоимость всего с НДС
 | `cardList`/`total`/`vatAmountTotal`                        | `decimal` | Всего по топливной карте сумма НДС
@@ -606,6 +742,19 @@ HTTP статусы ответа
                         }
                     ],
                     "total": {
+                        "subdivision": 0,
+                        "productCode": 0,
+                        "productType": 0,
+                        "productName": "",
+                        "productQuantity": 34.210000,
+                        "productUnitPrice": 0.0,
+                        "productCost": 70.70,
+                        "vatAmount": 5.89,
+                        "discountWithVAT": 2.32,
+                        "percentageForServices": 0.0,
+                        "costServiceWithVAT": 0.37,
+                        "costTotalWithVAT": 71.07,
+                        "vatAmountTotal": 5.99
                     },
                     "oilGas": {
                         "totalOilGas": 12846.13,
@@ -737,7 +886,7 @@ HTTP статусы ответа
 
 Структура запроса
 
-| Field       | Type   | Required | Description
+| Key         | Type   | Required | Description
 |-------------|--------|:--------:|------------
 | `startDate` | `date` |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
 | `endDate`   | `date` |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
@@ -753,7 +902,7 @@ HTTP статусы ответа
 
 Структура ответа
 
-| Field                      | Type      | Description
+| Key                        | Type      | Description
 |----------------------------|-----------|------------
 | `balanceBegin`             | `decimal` | Сальдо на начало периода
 | `totalPaidByMonth`         | `deciaml` | Итого произведено оплат на сумму за месяц
@@ -826,7 +975,7 @@ HTTP статусы ответа
 
 Структура запроса
 
-| Field       | Type   | Required | Description
+| Key         | Type   | Required | Description
 |-------------|--------|:--------:|------------
 | `startDate` | `date` |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
 | `endDate`   | `date` |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
@@ -840,18 +989,9 @@ HTTP статусы ответа
 }
 ```
 
-Пример запроса
-
-```json
-{
-  "StartDate": "12-15-2020",
-  "EndDate": "12-25-2020"
-}
-```
-
 Структура ответа
 
-| Field         | Type      | Description
+| Key           | Type      | Description
 |---------------|-----------|------------
 | `payDate`     | `date`    | Дата платежа
 | `payDocument` | `string`  | Номер документа выписки
