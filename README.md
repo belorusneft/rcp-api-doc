@@ -1017,3 +1017,28 @@ HTTP статусы ответа
 | 400  | Bad request
 | 401  | Unauthorized
 | 500  | Internal Server Error
+
+### Цены нефтепродуктов
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v2/Contract/oilPrices>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Структура ответа
+
+| Key           | Type      | Description
+|---------------|-----------|------------
+| `oilCode`     | `integer` | Код нефтепродукта
+| `smallName`   | `string`  | Краткое название нефтепродукта
+| `name`        | `string`  | Полное название нефтепродукта
+| `price`       | `decimal` | Цена нефтепродукта
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 401  | Unauthorized
+| 500  | Internal Server Error
