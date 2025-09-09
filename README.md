@@ -69,7 +69,7 @@ HTTP статусы ответа
 
 ## Свойства топливных карт
 
-`GET`: <https://ssl.beloil.by/rcp/i/api/v2/Contract/cards>
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/cards>
 
 Заголовки
 
@@ -78,35 +78,34 @@ HTTP статусы ответа
 
 Структура ответа
 
-| Key                   | Type      | Discription
-|-----------------------|-----------|-------------
-| `contrCode`           | `integer` | Номер договора
-| `cardCode`            | `integer` | Номер топливной карты
-| `monthNorm`           | `integer` | Месячная норма отпуска топлива
-| `dayNorm`             | `integer` | Дневная норма отпуска топлива в литрах
-| `dayNormAmount`       | `decimal` | Дневная норма в рублях
-| `oilGroupSet`         | `array`   | Массив разрешенных нефтепродуктов
-| `oilGroupSet`/`сode`  | `integer` | Код группы нефтепродуктов
-| `oilGroupSet`/`name`  | `string`  | Наименование группы нефтепродуктов
-| `transitFl`           | `boolean` | флаг разрешения отпуска по карте на транзитных АЗС (АЗС не принадлежащих ПОНу, с которым заключен договор)
-| `goodsFl`             | `boolean` | Флаг отпуска товаров (`false` - запрещено, `true` - разрешено)
-| `transitGoodsFl`      | `boolean` | Флаг разрешения отпуска товаров на транзитных АЗС (false - запрещено, true - разрешено)
-| `status`              | `enum`    | Статус топливной карты, `0` - работа по карте запрещена, `1` - работа по карте разрешена
-| `actionDate`          | `date`    | Cрок действия топливной карты
-| `division`            | `integer` | номер подразделения
-| `driver`              | `string`  | ФИО водителя
-| `carNum`              | `string`  | Государственный регистрационный знак автомобиля
-| `priority`            | `integer` | Приоритет карты при распределении денежных средств, когда последних не хватает на полную суточную норму договора. Сначала деньги распределяются на карты с большим приоритетом
-| `dosePermitted`       | `integer` | Разрешенная доза в литрах
-| `dosePermittedAmount` | `decimal` | Разрешенная доза в деньгах
-| `kapschCard`          | `boolean` | `true` - топливная карта является картой счета для BELTOLL, `false` - не является
-| `kapschContract`      | `boolean` | `true` - топливная карта является картой договора для BELTOLL, `false` - не является
-| `gasRemoteFill`       | `boolean` | Флаг удаленной заправки газом. `true` - разрешена, `false` - запрещена
-| `gasBottleVolume`     | `integer` | Объем газового баллона
-| `gasBottleExaminationDate` | `datetime` | Дата освидетельствования баллона
+| Key                            | Type       | Discription
+|--------------------------------|------------|-------------
+| `contrCode`                    | `integer`  | Номер договора
+| `cardCode`                     | `integer`  | Номер топливной карты
+| `monthNorm`                    | `integer`  | Месячная норма отпуска топлива
+| `dayNorm`                      | `integer`  | Дневная норма отпуска топлива в литрах
+| `dayNormAmount`                | `decimal`  | Дневная норма в рублях
+| `oilGroupSet`                  | `array`    | Массив разрешенных нефтепродуктов
+| `transitFl`                    | `boolean`  | флаг разрешения отпуска по карте на транзитных АЗС (АЗС не принадлежащих ПОНу, с которым заключен договор)
+| `goodsFl`                      | `boolean`  | Флаг отпуска товаров (`false` - запрещено, `true` - разрешено)
+| `transitGoodsFl`               | `boolean`  | Флаг разрешения отпуска товаров на транзитных АЗС (false - запрещено, true - разрешено)
+| `status`                       | `enum`     | Статус топливной карты, `0` - работа по карте запрещена, `1` - работа по карте разрешена
+| `actionDate`                   | `date`     | Cрок действия топливной карты
+| `division`                     | `integer`  | номер подразделения
+| `driver`                       | `string`   | ФИО водителя
+| `carNum`                       | `string`   | Государственный регистрационный знак автомобиля
+| `priority`                     | `integer`  | Приоритет карты при распределении денежных средств, когда последних не хватает на полную суточную норму договора. Сначала деньги распределяются на карты с большим приоритетом
+| `dosePermitted`                | `integer`  | Разрешенная доза в литрах
+| `dosePermittedAmount`          | `decimal`  | Разрешенная доза в деньгах
+| `kapschCard`                   | `boolean`  | `true` - топливная карта является картой счета для BELTOLL, `false` - не является
+| `kapschContract`               | `boolean`  | `true` - топливная карта является картой договора для BELTOLL, `false` - не является
+| `gasRemoteFill`                | `boolean`  | Флаг удаленной заправки газом. `true` - разрешена, `false` - запрещена
+| `gasBottleVolume`              | `integer`  | Объем газового баллона
+| `gasBottleExaminationDate`     | `datetime` | Дата освидетельствования баллона
 | `gasBottleNextExaminationDate` | `datetime` | Дата следующего освидетельствования баллона
-| `gasRulesAccepted`   | `boolean` | Флаг ознакомления с правилами
-| `pinCode`            | `integer` | Пинкод карты
+| `gasRulesAccepted`             | `boolean`  | Флаг ознакомления с правилами
+| `pinCode`                      | `integer`  | Пинкод карты
+| `roadTollsFl`                  | `boolean`  | Флаг оплаты дорог
 
 Кодировка группы нефтепродуктов ключа `oilGroupSet`
 | Бит | Группа
@@ -139,25 +138,39 @@ HTTP статусы ответа
                 "name": "ДТ"
             }
         ],
-        "transitFl": false,
-        "goodsFl": true,
-        "transitGoodsFl": true,
-        "status": 1,
-        "actionDate": "2023-01-11T00:00:00",
-        "division": 0,
-        "driver": "",
-        "carNum": "",
-        "priority": 0,
-        "dosePermitted": 9,
-        "dosePermittedAmount": 16.02,
-        "kapschCard": false,
-        "kapschContract": false,
-        "gasRemoteFill" : true,
-        "gasBottleVolume": 45,
-        "gasBottleExaminationDate": "2023-01-11T00:00:00",
-        "gasBottleNextExaminationDate":  "2023-01-11T00:00:00",
-        "gasRulesAccepted": true,
-        "pinCode": 1234 
+      "transitFl": true,
+      "goodsFl": true,
+      "transitGoodsFl": true,
+      "status": 0,
+      "actionDate": "2025-09-08T05:32:15.191Z",
+      "division": 0,
+      "driver": "string",
+      "carNum": "string",
+      "priority": 0,
+      "dosePermitted": 0,
+      "dosePermittedAmount": 0,
+      "kapschCard": true,
+      "kapschContract": true,
+      "gasRemoteFill": true,
+      "gasBottleVolume": 0,
+      "gasBottleExaminationDate": "2025-09-08T05:32:15.191Z",
+      "gasBottleNextExaminationDate": "2025-09-08T05:32:15.191Z",
+      "gasRulesAccepted": true,
+      "cardType": 0,
+      "pinCode": "string",
+      "vehicleParams": [
+        {
+          "cardCode": 0,
+          "vehicleId": 0,
+          "number": "string",
+          "model": "string",
+          "gasBottleVolume": 0,
+          "gasBottleExaminationDate": "2025-09-08T05:32:15.191Z",
+          "gasBottleNextExaminationDate": "2025-09-08T05:32:15.191Z",
+          "viewInReportFl": true
+        }
+      ],
+      "roadTollsFl": true
     }
 ]
 ```
@@ -172,7 +185,7 @@ HTTP статусы ответа
 
 ## Измение свойств карт
 
-`PUT`: <https://ssl.beloil.by/rcp/i/api/v2/Contract/cards>
+`PUT`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/cards>
 
 Заголовки
 
@@ -181,36 +194,47 @@ HTTP статусы ответа
 
 Структура запроса
 
-| Key                   | Type      | Required | Discription
-|-----------------------|-----------|:--------:|------------
-| `contrCode`           | `integer` |   Yes    | Номер договора
-| `cardCode`            | `integer` |   Yes    | Номер топливной карты
-| `monthNorm`           | `integer` |   Yes    | Месячная норма отпуска топлива
-| `dayNorm`             | `integer` |   Yes    | Дневная норма отпуска топлива в литрах
-| `dayNormAmount`       | `decimal` |   Yes    | Дневная норма в рублях
-| `oilGroupSet`         | `integer` |   Yes    | Набор групп нефтепродуктов (см. примечание)
-| `oilGroupSet`         | `array`   |   Yes    | Массив разрешенных нефтепродуктов
-| `oilGroupSet`/`сode`  | `integer` |   Yes    | Код группы нефтепродуктов
-| `oilGroupSet`/`name`  | `string`  |   Yes    | Наименование группы нефтепродуктов
-| `transitFl`           | `boolean` |   Yes    | флаг разрешения отпуска по топливной карте на транзитных АЗС (АЗС не принадлежащих ПОНу, с которым заключен договор)
-| `goodsFl`             | `boolean` |   Yes    | Флаг отпуска товаров (`false` - запрещено, `true` - разрешено)
-| `transitGoodsFl`      | `boolean` |   Yes    | Флаг разрешения отпуска товаров на транзитных АЗС (`false` - запрещено, `true` - разрешено)
-| `status`              | `enum`    |   Yes    | Статус топливной карты, `0` - работа по топливноой карте запрещена, `1` - работа по карте разрешена
-| `actionDate`          | `date`    |   Yes    | Cрок действия топливной карты
-| `division`            | `integer` |   Yes    | Номер подразделения
-| `driver`              | `string`  |   Yes    | ФИО водителя
-| `carNum`              | `string`  |   Yes    | Государственный регистрационный знак автомобиля
-| `priority`            | `integer` |   Yes    | Приоритет топливной карты при распределении денежных средств, когда последних не хватает на полную суточную норму договора. Сначала деньги распределяются на карты с большим приоритетом
-| `dosePermitted`       | `integer` |   Yes    | Разрешенная доза в литрах
-| `dosePermittedAmount` | `decimal` |   Yes    | Разрешенная доза в деньгах
-| `kapschCard`          | `boolean` |   Yes    | `true` - топливная карта карта является картой счета для BELTOLL, `false` - не является
-| `kapschContract`      | `boolean` |   Yes    | `true` - топливная карта является картой договора для BELTOLL, `false` - не является
-| `user`                | `string`  |   Yes    | Логин пользователя, который сделал изменения в картах
-| `gasRemoteFill`       | `boolean` | Yes | Флаг удаленной заправки газом. `true` - разрешена, `false` - запрещена
-| `gasBottleVolume`     | `integer` | Yes | Объем газового баллона
-| `gasBottleExaminationDate` | `datetime` | Yes | Дата освидетельствования баллона
-| `gasBottleNextExaminationDate` | `datetime` | Yes | Дата следующего освидетельствования баллона
-| `gasRulesAccepted`   | `boolean` | Yes | Флаг ознакомления с правилами
+| Key                                            | Type       | Required | Discription
+|------------------------------------------------|------------|:--------:|------------
+| `contrCode`                                    | `integer`  |   Yes    | Номер договора
+| `cardCode`                                     | `integer`  |   Yes    | Номер топливной карты
+| `monthNorm`                                    | `integer`  |   Yes    | Месячная норма отпуска топлива
+| `dayNorm`                                      | `integer`  |   Yes    | Дневная норма отпуска топлива в литрах
+| `dayNormAmount`                                | `decimal`  |   Yes    | Дневная норма в рублях
+| `oilGroupSet`                                  | `integer`  |   Yes    | Набор групп нефтепродуктов (см. примечание)
+| `oilGroupSet`                                  | `array`    |   Yes    | Массив разрешенных нефтепродуктов
+| `oilGroupSet`/`сode`                           | `integer`  |   Yes    | Код группы нефтепродуктов
+| `oilGroupSet`/`name`                           | `string`   |   Yes    | Наименование группы нефтепродуктов
+| `transitFl`                                    | `boolean`  |   Yes    | флаг разрешения отпуска по топливной карте на транзитных АЗС (АЗС не принадлежащих ПОНу, с которым заключен договор)
+| `goodsFl`                                      | `boolean`  |   Yes    | Флаг отпуска товаров (`false` - запрещено, `true` - разрешено)
+| `transitGoodsFl`                               | `boolean`  |   Yes    | Флаг разрешения отпуска товаров на транзитных АЗС (`false` - запрещено, `true` - разрешено)
+| `status`                                       | `enum`     |   Yes    | Статус топливной карты, `0` - работа по топливноой карте запрещена, `1` - работа по карте разрешена
+| `actionDate`                                   | `date`     |   Yes    | Cрок действия топливной карты
+| `division`                                     | `integer`  |   Yes    | Номер подразделения
+| `driver`                                       | `string`   |   Yes    | ФИО водителя
+| `carNum`                                       | `string`   |   Yes    | Государственный регистрационный знак автомобиля
+| `priority`                                     | `integer`  |   Yes    | Приоритет топливной карты при распределении денежных средств, когда последних не хватает на полную суточную норму договора. Сначала деньги распределяются на карты с большим приоритетом
+| `dosePermitted`                                | `integer`  |   Yes    | Разрешенная доза в литрах
+| `dosePermittedAmount`                          | `decimal`  |   Yes    | Разрешенная доза в деньгах
+| `kapschCard`                                   | `boolean`  |   Yes    | `true` - топливная карта карта является картой счета для BELTOLL, `false` - не является
+| `kapschContract`                               | `boolean`  |   Yes    | `true` - топливная карта является картой договора для BELTOLL, `false` - не является
+| `user`                                         | `string`   |   Yes    | Логин пользователя, который сделал изменения в картах
+| `gasRemoteFill`                                | `boolean`  |   Yes    | Флаг удаленной заправки газом. `true` - разрешена, `false` - запрещена
+| `gasBottleVolume`                              | `integer`  |   Yes    | Объем газового баллона
+| `gasBottleExaminationDate`                     | `datetime` |   Yes    | Дата освидетельствования баллона
+| `gasBottleNextExaminationDate`                 | `datetime` |   Yes    | Дата следующего освидетельствования баллона
+| `gasRulesAccepted`                             | `boolean`  |   Yes    | Флаг ознакомления с правилами
+| `cardType`                                     | `integer`  |    No    | Тип карты
+| `pinCode`                                      | `string`   |    No    | Пинкод карты
+| `vehicleParams`                                | `array`    |    No    | Параметры автомобилей
+| `vehicleParams`/`cardCode`                     | `integer`  |    No    | Номер карты
+| `vehicleParams`/`vehicleId`                    | `long`     |   Yes    | Номер автомобиля
+| `vehicleParams`/`number`                       | `string`   |    No    | Номер автомобиля
+| `vehicleParams`/`model`                        | `string`   |    No    | Водитель
+| `vehicleParams`/`gasBottleVolume`              | `integer`  |    No    | объем газового баллона
+| `vehicleParams`/`gasBottleExaminationDate`     | `date`     |    No    | дата освидетельствования баллона
+| `vehicleParams`/`gasBottleNextExaminationDate` | `date`     |    No    | дата последующего освидетельствования баллона
+| `vehicleParams`/`viewInReportFl`               | `boolen`   |   Yes    | отражать в отчетах номер авто
 
 Кодировка группы нефтепродуктов в поле `oilGroupSet`
 | Бит | Группа
@@ -243,24 +267,39 @@ HTTP статусы ответа
                 "name": "ДТ"
             }
         ],
-        "transitFl": true,
-        "goodsFl": true,
-        "transitGoodsFl": true,
-        "status": 1,
-        "actionDate": "2070-01-01T00:00:00",
-        "division": 0,
-        "driver": "",
-        "carNum": "",
-        "priority": 0,
-        "dosePermitted": 100,
-        "dosePermittedAmount": 175,
-        "kapschCard": false,
-        "kapschContract": false,
-        "gasRemoteFill" : true,
-        "gasBottleVolume": 45,
-        "gasBottleExaminationDate": "2023-01-11T00:00:00",
-        "gasBottleNextExaminationDate":  "2023-01-11T00:00:00",
-        "gasRulesAccepted": true
+      "transitFl": true,
+      "goodsFl": true,
+      "transitGoodsFl": true,
+      "status": 0,
+      "actionDate": "2025-09-08T05:33:58.226Z",
+      "division": 0,
+      "driver": "string",
+      "carNum": "string",
+      "priority": 0,
+      "dosePermitted": 0,
+      "dosePermittedAmount": 0,
+      "kapschCard": true,
+      "kapschContract": true,
+      "gasRemoteFill": true,
+      "gasBottleVolume": 0,
+      "gasBottleExaminationDate": "2025-09-08T05:33:58.226Z",
+      "gasBottleNextExaminationDate": "2025-09-08T05:33:58.226Z",
+      "gasRulesAccepted": true,
+      "cardType": 0,
+      "pinCode": "string",
+      "vehicleParams": [
+        {
+          "cardCode": 0,
+          "vehicleId": 0,
+          "number": "string",
+          "model": "string",
+          "gasBottleVolume": 0,
+          "gasBottleExaminationDate": "2025-09-08T05:33:58.226Z",
+          "gasBottleNextExaminationDate": "2025-09-08T05:33:58.226Z",
+          "viewInReportFl": true
+        }
+      ],
+      "roadTollsFl": true
     }
 ]
 ```
@@ -278,7 +317,7 @@ HTTP статусы ответа
 
 ### Баланс по договору
 
-`POST`: <https://ssl.beloil.by/rcp/i/api/v2/Contract/balance>
+`POST`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/balance>
 
 Заголовки  
 
@@ -287,29 +326,33 @@ HTTP статусы ответа
 
 Структура ответа
 
-| Key                  | Type      | Discription
-|----------------------|-----------|------------
-| `loanFlag`           | `boolean` | Признак наличия коммерческого займа `false` - нет, `true` - есть
-| `contractIssuerId`   | `integer` | Код эмитента
-| `clientName`         | `string`  | Наименование предприятия
-| `contractNumber`     | `integer` | Номер договора
-| `summa`              | `decimal` | Остаток суммы на договоре
-| `date`               | `date`    | Время последнего пересчета остатка
-| `unn`                | `integer` | УНН
-| `effectPrice`        | `decimal` | Сумма средств, при которой все разрешенные карты могут заправиться на 100% дневной нормы
-| `phone`              | `string`  | Номер телефона
-| `internetChangeCard` | `boolean` | Флаг разрешения менять свойства топливных карт в кабинете `false` - нельзя, `true` - можно
-| `paymentPlatonFlag`  | `boolean` | Флаг разрешения осуществлять платежи в системе Платон `false` - нельзя, `true` - можно
-| `minimumBalanceNoticeFlag` | `boolean` | Признак уведомления о минимальном балансе
-| `minimumBalanceSumm`       | `double`  | Сумма минимального баланса
-| `mDMPartnerCode`    | `string`  | Код МДМ партнера
-| `virtualCardCost`   | `decimal` | Стоимость виртуальной карты
-| `expressFlag`       | `integer` | Признак использования экспресс-договора. `0` - не используется, `1` - используется
-| `isElectronicCheck` | `boolean` | Cогласие на получение электронных чеков
+| Key                         | Type      | Discription
+|-----------------------------|-----------|------------
+| `loanFlag`                  | `boolean` | Признак наличия коммерческого займа `false` - нет, `true` - есть
+| `contractIssuerId`          | `integer` | Код эмитента
+| `clientName`                | `string`  | Наименование предприятия
+| `contractNumber`            | `integer` | Номер договора
+| `summa`                     | `decimal` | Остаток суммы на договоре
+| `date`                      | `date`    | Время последнего пересчета остатка
+| `unn`                       | `integer` | УНН
+| `effectPrice`               | `decimal` | Сумма средств, при которой все разрешенные карты могут заправиться на 100% дневной нормы
+| `phone`                     | `string`  | Номер телефона
+| `internetChangeCard`        | `boolean` | Флаг разрешения менять свойства топливных карт в кабинете `false` - нельзя, `true` - можно
+| `paymentPlatonFlag`         | `boolean` | Флаг разрешения осуществлять платежи в системе Платон `false` - нельзя, `true` - можно
+| `minimumBalanceNoticeFlag`  | `boolean` | Признак уведомления о минимальном балансе
+| `minimumBalanceSumm`        | `double`  | Сумма минимального баланса
+| `mDMPartnerCode`            | `string`  | Код МДМ партнера
+| `virtualCardCost`           | `decimal` | Стоимость виртуальной карты
+| `expressFlag`               | `integer` | Признак использования экспресс-договора. `0` - не используется, `1` - используется
+| `isElectronicCheck`         | `boolean` | Cогласие на получение электронных чеков
 | `noReminderElectronicCheck` | `boolean` | флаг напоминания вывода уведомлений о согласии на электронные чеки
-| `gasRemoteFill`     | `boolean` | флаг наличия доп. соглашения на самостоятельную заправку газом
-| `statusCode`        | `integer` | Код состояния договора
-| `isGasEquipment`    | `boolean` | Флаг наличия газобаллонного оборудования. `true` - есть, `false` - нет
+| `gasRemoteFill`             | `boolean` | флаг наличия доп. соглашения на самостоятельную заправку газом
+| `statusCode`                | `integer` | Код состояния договора
+| `isGasEquipment`            | `boolean` | Флаг наличия газобаллонного оборудования. `true` - есть, `false` - нет
+| `isBudgetary`               | `boolean` | Признак бюджетой организации. `true` - да, `false` - нет
+| `isEditFlagElectronicCheck` | `boolean` | Флаг изменения флага согласия на электронные чеки. `true` - да, `false` - нет
+| `emitentName`               | `string`  | Наименование эмитента
+| `emitentEmail`              | `string`  | Email эмитента
 
 Пример успешного ответа
 
@@ -335,7 +378,11 @@ HTTP статусы ответа
     "noReminderElectronicCheck": true,
     "gasRemoteFill": true,
     "statusCode": 1,
-    "isGasEquipment": true
+    "isGasEquipment": true,
+    "isBudgetary": true,
+    "isEditFlagElectronicCheck": true,
+    "emitentName": "string",
+    "emitentEmail": "string"
 }
 ```
 
@@ -350,7 +397,7 @@ HTTP статусы ответа
 
 ### Баланс по договору без подсчета сумм
 
-`POST`: <https://ssl.beloil.by/rcp/i/api/v2/Contract/balanceLight>
+`POST`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/balanceLight>
 
 Заголовки
 
@@ -359,29 +406,33 @@ HTTP статусы ответа
 
 Структура ответа
 
-| Key                  | Type      | Discription
-|----------------------|-----------|------------
-| `loanFlag`           | `boolean` | Флаг наличия коммерческого займа `false` - нет, `true` - есть
-| `contractIssuerId`   | `integer` | Код эмитента
-| `clientName`         | `string`  | Наименование предприятия
-| `contractNumber`     | `integer` | Номер договора
-| `summa`              | `decimal` | Остаток суммы на договоре
-| `date`               | `date`    | Время последнего пересчета остатка
-| `unn`                | `integer` | УНН
-| `effectPrice`        | `decimal` | Сумма средств, при которой все разрешенные карты могут заправиться на 100% дневной нормы
-| `phone`              | `string`  | Номер телефона
-| `internetChangeCard` | `boolean` | Флаг разрешения менять свойства карт в кабинете `false` - нельзя, `true` - можно
-| `paymentPlatonFlag`  | `boolean` | Флаг разрешения осуществлять платежи в системе Платон `false` - нельзя, `true` - можно
-| `minimumBalanceNoticeFlag` | `boolean` | Признак уведомления о минимальном балансе
-| `minimumBalanceSumm` | `double` | Сумма минимального баланса
-| `mDMPartnerCode` | `string` | Код МДМ партнера
-| `virtualCardCost` | `decimal` | Стоимость виртуальной карты
-| `expressFlag` | `int` | Признак использования экспресс-договора. `0` - не используется, `1` - используется
-| `isElectronicCheck` | `boolean` | Cогласие на получение электронных чеков
+| Key                         | Type      | Discription
+|-----------------------------|-----------|------------
+| `loanFlag`                  | `boolean` | Флаг наличия коммерческого займа `false` - нет, `true` - есть
+| `contractIssuerId`          | `integer` | Код эмитента
+| `clientName`                | `string`  | Наименование предприятия
+| `contractNumber`            | `integer` | Номер договора
+| `summa`                     | `decimal` | Остаток суммы на договоре
+| `date`                      | `date`    | Время последнего пересчета остатка
+| `unn`                       | `integer` | УНН
+| `effectPrice`               | `decimal` | Сумма средств, при которой все разрешенные карты могут заправиться на 100% дневной нормы
+| `phone`                     | `string`  | Номер телефона
+| `internetChangeCard`        | `boolean` | Флаг разрешения менять свойства карт в кабинете `false` - нельзя, `true` - можно
+| `paymentPlatonFlag`         | `boolean` | Флаг разрешения осуществлять платежи в системе Платон `false` - нельзя, `true` - можно
+| `minimumBalanceNoticeFlag`  | `boolean` | Признак уведомления о минимальном балансе
+| `minimumBalanceSumm`        | `double` | Сумма минимального баланса
+| `mDMPartnerCode`            | `string` | Код МДМ партнера
+| `virtualCardCost`           | `decimal` | Стоимость виртуальной карты
+| `expressFlag`               | `int` | Признак использования экспресс-договора. `0` - не используется, `1` - используется
+| `isElectronicCheck`         | `boolean` | Cогласие на получение электронных чеков
 | `noReminderElectronicCheck` | `boolean` | флаг напоминания вывода уведомлений о согласии на электронные чеки
-| `gasRemoteFill` | `boolean` | флаг наличия доп. соглашения на самостоятельную заправку газом
-| `statusCode` | `integer` | Код состояния договора
-| `isGasEquipment` | `boolean` | Флаг наличия газобаллонного оборудования. `true` - есть, `false` - нет
+| `gasRemoteFill`             | `boolean` | флаг наличия доп. соглашения на самостоятельную заправку газом
+| `statusCode`                | `integer` | Код состояния договора
+| `isGasEquipment`            | `boolean` | Флаг наличия газобаллонного оборудования. `true` - есть, `false` - нет
+| `isBudgetary`               | `boolean` | Признак бюджетой организации. `true` - да, `false` - нет
+| `isEditFlagElectronicCheck` | `boolean` | Флаг изменения флага согласия на электронные чеки. `true` - есть, `false` - нет
+| `emitentName`               | `string`  | Наименование эмитента
+| `emitentEmail`              | `string`  | Email эмитента
 
 Пример успешного ответа
 
@@ -407,7 +458,11 @@ HTTP статусы ответа
     "noReminderElectronicCheck": true,
     "gasRemoteFill": true,
     "statusCode": 1,
-    "isGasEquipment": true
+    "isGasEquipment": true,
+  "isBudgetary": true,
+  "isEditFlagElectronicCheck": true,
+  "emitentName": "string",
+  "emitentEmail": "string"
 }
 ```
 
@@ -422,7 +477,7 @@ HTTP статусы ответа
 
 ### Пооперационный отчет
 
-`POST`: <https://ssl.beloil.by/rcp/i/api/v2/Contract/operational>
+`POST`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/operational>
 
 Заголовки
 
@@ -431,27 +486,35 @@ HTTP статусы ответа
 
 Структура запроса
 
-| Key               | Type      | Required | Description
-|-------------------|-----------|:--------:|------------
-| `startDate`       | `date`    |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
-| `endDate`         | `date`    |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
-| `cardNumber`      | `integer` |   Yes    | Номер топливной карты. Если значение меньше либо равно нулю, тогда отчет по всем топливным картам договора
-| `subDivisnNumber` | `integer` |   Yes    | Номер подразделения. Если меньше нуля, тогда по всем подразделениям договора
-| `flChoice`        | `integer` |   Yes    | Опция выбора информации: `1` - топливо, `2` - оплата дорог, `4` - иные товары (услуги), `3` - топливо и оплата дорог, `5` - топливо и иные товары (услуги), `6` - оплата дорог и иные товары (услуги), `7` - топливо, оплата дорог и иные товары (услуги)
-| `AzsCode`         | `integer` |   Yes    | Номер АЗС. Значение `-1` - любой номер
-| `EmtCodeFrm`      | `integer` |   Yes    | Код эмитента. Значение `-1` - любой эмитент
+| Key                | Type      | Required | Description
+|--------------------|-----------|:--------:|------------
+| `startDate`        | `date`    |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
+| `endDate`          | `date`    |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
+| `cardNumber`       | `integer` |   Yes    | Номер топливной карты. Если значение меньше либо равно нулю, тогда отчет по всем топливным картам договора
+| `subDivisnNumber`  | `integer` |   Yes    | Номер подразделения. Если меньше нуля, тогда по всем подразделениям договора
+| `flChoice`         | `integer` |   Yes    | Опция выбора информации: `1` - топливо, `2` - оплата дорог, `4` - иные товары (услуги), `3` - топливо и оплата дорог, `5` - топливо и иные товары (услуги), `6` - оплата дорог и иные товары (услуги), `7` - топливо, оплата дорог и иные товары (услуги)
+| `AzsCode`          | `integer` |   Yes    | Номер АЗС. Значение `-1` - любой номер
+| `EmtCodeFrm`       | `integer` |   Yes    | Код эмитента. Значение `-1` - любой эмитент
+| `contractId`       | `integer` |   Yes    | Номер договора
+| `contractIssuerId` | `integer` |   Yes    | ID эмитента договора
+| `discountCode`     | `integer` |   Yes    | Код скидки
+| `author`           | `string`  |    No    | Автор изменений
 
 Пример запроса
 
 ```json
 {
-    "startDate": "11-01-2019",
-    "endDate": "11-30-2020",
-    "cardNumber": 0,
-    "subDivisnNumber": -1,
-    "flChoice": 2,
-    "AzsCode" : -1,
-    "EmtCodeFrm": -1
+  "startDate": "2025-09-08T06:47:06.839Z",
+  "endDate": "2025-09-08T06:47:06.839Z",
+  "contractId": 0,
+  "contractIssuerId": 0,
+  "flChoice": 0,
+  "cardNumber": 0,
+  "subDivisnNumber": 0,
+  "discountCode": 0,
+  "author": "string",
+  "emtCodeFrm": 0,
+  "azsCode": 0
 }
 ```
 
@@ -540,7 +603,7 @@ HTTP статусы ответа
                     "driverName": "",
                     "docNumber": 1234,
                     "emtCodeFrm": 370
-                },
+                }
             ],
     "total": {
         "subdivision": 0,
@@ -566,7 +629,7 @@ HTTP статусы ответа
         "driverName": null,
         "docNumber": 0,
         "emtCodeFrm": 0
-    }
+    }}]
 }
 ```
 
@@ -581,7 +644,7 @@ HTTP статусы ответа
 
 ### Пооперационный отчет суммарный по типам ТМЦУ
 
-`POST` <https://ssl.beloil.by/rcp/i/api/v2/Contract/operationalSum>  
+`POST` <https://ssl.beloil.by/rcp/i/api/v3/Contract/operationalSum>  
 
 Заголовки
 
@@ -590,13 +653,18 @@ HTTP статусы ответа
 
 Структура запроса
 
-| Key               | Type      | Required | Description
-|-------------------|-----------|:--------:|------------
-| `startDate`       | `date`    |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
-| `endDate`         | `date`    |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
-| `cardNumber`      | `integer` |   Yes    | Номер топливной карты. Если значение меньше либо равно нулю, тогда отчет по всем картам договора
-| `subDivisnNumber` | `integer` |   Yes    | Номер подразделения. Если значение меньше нуля, тогда отчет по всем подразделениям договора
-| `flChoice`        | `integer` |   Yes    | Параметр `FlChoice` - флаг выбора информации: `1` - топливо, `2` - оплата дорог, `4` - иные товары (услуги), `3` - топливо и оплата дорог, `5` - топливо и иные товары (услуги), `6` -  оплата дорог и иные товары (услуги), `7` - топливо, оплата дорог и иные товары (услуги)
+| Key                | Type      | Required | Description
+|--------------------|-----------|:--------:|------------
+| `startDate`        | `date`    |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
+| `endDate`          | `date`    |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
+| `contractId`       | `integer` |   Yes    | Номер договора
+| `contractIssuerId` | `integer` |   Yes    | ID эмитента договора
+| `cardNumber`       | `integer` |   Yes    | Номер топливной карты. Если значение меньше либо равно нулю, тогда отчет по всем картам договора
+| `subDivisnNumber`  | `integer` |   Yes    | Номер подразделения. Если значение меньше нуля, тогда отчет по всем подразделениям договора
+| `flChoice`         | `integer` |   Yes    | Параметр `FlChoice` - флаг выбора информации: `1` - топливо, `2` - оплата дорог, `4` - иные товары (услуги), `3` - топливо и оплата дорог, `5` - топливо и иные товары (услуги), `6` -  оплата дорог и иные товары (услуги), `7` - топливо, оплата дорог и иные товары (услуги)
+| `author`           | `string`  |    No    | Автор изменений 
+| `emtCodeFrm`       | `integer` |    No    | Код эмитента, если меньше нуля, то по всем подразделениям
+| `azsCode`          | `integer` |    No    | Номер азс, если меньше нуля, то по всем подразделениям
 
 Пример запроса
 
@@ -793,7 +861,7 @@ HTTP статусы ответа
                         "totalTotalVATRoad": 0.0
                     },
                     "totalQuantity": 7748.850000
-                },
+                }
             ],
             "divisionSummaryOilGas": {
                 "totalOilGas": 50579.27,
@@ -877,7 +945,7 @@ HTTP статусы ответа
 
 ### Сверка расчетов
 
-`POST`: <https://ssl.beloil.by/rcp/i/api/v2/Contract/recon>
+`POST`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/recon>
 
 Заголовки
 
@@ -890,13 +958,30 @@ HTTP статусы ответа
 |-------------|--------|:--------:|------------
 | `startDate` | `date` |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
 | `endDate`   | `date` |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
+| `contractId`       | `integer` |   Yes    | Номер договора
+| `contractIssuerId` | `integer` |   Yes    | ID эмитента договора
+| `cardNumber`       | `integer` |   Yes    | Номер топливной карты. Если значение меньше либо равно нулю, тогда отчет по всем картам договора
+| `subDivisnNumber`  | `integer` |   Yes    | Номер подразделения. Если значение меньше нуля, тогда отчет по всем подразделениям договора
+| `flChoice`         | `integer` |   Yes    | Параметр `FlChoice` - флаг выбора информации: `1` - топливо, `2` - оплата дорог, `4` - иные товары (услуги), `3` - топливо и оплата дорог, `5` - топливо и иные товары (услуги), `6` -  оплата дорог и иные товары (услуги), `7` - топливо, оплата дорог и иные товары (услуги)
+| `author`           | `string`  |    No    | Автор изменений 
+| `emtCodeFrm`       | `integer` |    No    | Код эмитента, если меньше нуля, то по всем подразделениям
+| `azsCode`          | `integer` |    No    | Номер азс, если меньше нуля, то по всем подразделениям
 
 Пример запроса
 
 ```json
 {
-  "StartDate": "12-14-2019",
-  "EndDate": "12-16-2019"
+  "startDate": "2025-09-08T07:05:28.924Z",
+  "endDate": "2025-09-08T07:05:28.924Z",
+  "contractId": 0,
+  "contractIssuerId": 0,
+  "flChoice": 0,
+  "cardNumber": 0,
+  "subDivisnNumber": 0,
+  "discountCode": 0,
+  "author": "string",
+  "emtCodeFrm": 0,
+  "azsCode": 0
 }
 ```
 
@@ -964,63 +1049,10 @@ HTTP статусы ответа
 | 401  | Unauthorized
 | 500  | Internal Server Error
 
-### Движение денежных средств
-
-`POST`: <https://ssl.beloil.by/rcp/i/api/v2/contract/PaymentReport>
-
-Заголовки
-
-* `Authorization`: `Bearer <токен>`
-* `Content-Type`: `application/json`
-
-Структура запроса
-
-| Key         | Type   | Required | Description
-|-------------|--------|:--------:|------------
-| `startDate` | `date` |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
-| `endDate`   | `date` |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
-
-Пример запроса
-
-```json
-{
-  "StartDate": "12-15-2020",
-  "EndDate": "12-25-2020"
-}
-```
-
-Структура ответа
-
-| Key           | Type      | Description
-|---------------|-----------|------------
-| `payDate`     | `date`    | Дата платежа
-| `payDocument` | `string`  | Номер документа выписки
-| `paySum`      | `decimal` | Сумма платежа
-
-Пример успешного ответа
-
-```json
-[
-    {
-        "payDate": "2019-11-05T00:00:00",
-        "payDocument": "8477",
-        "paySum": 20000.00
-    }
-]
-```
-
-HTTP статусы ответа
-
-| Code | Description
-|------|------------
-| 200  | OK
-| 400  | Bad request
-| 401  | Unauthorized
-| 500  | Internal Server Error
 
 ### Цены нефтепродуктов
 
-`GET`: <https://ssl.beloil.by/rcp/i/api/v2/Contract/oilPrices>
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/oilPrices>
 
 Заголовки
 
@@ -1034,6 +1066,1036 @@ HTTP статусы ответа
 | `smallName`   | `string`  | Краткое название нефтепродукта
 | `name`        | `string`  | Полное название нефтепродукта
 | `price`       | `decimal` | Цена нефтепродукта
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Список карт
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/cardlist>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Структура ответа
+
+| Key        | Type      | Description
+|------------|-----------|------------
+| `cardCode` | `integer` | Номер карты 
+| `driver`   | `string`  | Водитель
+| `division` | `string`  | Подразделение
+
+Пример успешного ответа
+
+```json
+{
+  "list": [
+    {
+      "cardCode": 0,
+      "driver": "string",
+      "division": 0
+    }
+  ]
+}
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Получить справочник нефтепродуктов
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/oil>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Структура ответа
+
+| Key            | Type      | Description
+|----------------|-----------|------------
+| `oilCode`      | `integer` | Код нефтепродукта
+| `smallName`    | `string`  | Краткое название нефтепродукта
+| `actualFlag`   | `integer` | Флаг атуильности
+| `сodeOilGroup` | `integer` | Код группы нефтепродукта
+| `nameOilGroup` | `string`  | Наименование группы нефтепродукта
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Получить список групп нефтепродуктов
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/OilGroup>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Структура ответа
+
+| Key    | Type      | Description
+|--------|-----------|------------
+| `code` | `integer` | Код группы
+| `name` | `string`  | Наименование группы
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Коммерческий заем
+
+`POST`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/commercial>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key         | Type   | Required | Description
+|-------------|--------|:--------:|------------
+| `startDate` | `date` |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
+| `endDate`   | `date` |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
+| `contractId`       | `integer` |   Yes    | Номер договора
+| `contractIssuerId` | `integer` |   Yes    | ID эмитента договора
+| `cardNumber`       | `integer` |   Yes    | Номер топливной карты. Если значение меньше либо равно нулю, тогда отчет по всем картам договора
+| `subDivisnNumber`  | `integer` |   Yes    | Номер подразделения. Если значение меньше нуля, тогда отчет по всем подразделениям договора
+| `flChoice`         | `integer` |   Yes    | Параметр `FlChoice` - флаг выбора информации: `1` - топливо, `2` - оплата дорог, `4` - иные товары (услуги), `3` - топливо и оплата дорог, `5` - топливо и иные товары (услуги), `6` -  оплата дорог и иные товары (услуги), `7` - топливо, оплата дорог и иные товары (услуги)
+| `author`           | `string`  |    No    | Автор изменений 
+| `emtCodeFrm`       | `integer` |    No    | Код эмитента, если меньше нуля, то по всем подразделениям
+| `azsCode`          | `integer` |    No    | Номер азс, если меньше нуля, то по всем подразделениям
+
+Пример запроса
+
+```json
+{
+  "startDate": "2025-09-08T07:05:28.924Z",
+  "endDate": "2025-09-08T07:05:28.924Z",
+  "contractId": 0,
+  "contractIssuerId": 0,
+  "flChoice": 0,
+  "cardNumber": 0,
+  "subDivisnNumber": 0,
+  "discountCode": 0,
+  "author": "string",
+  "emtCodeFrm": 0,
+  "azsCode": 0
+}
+```
+
+Структура ответа
+
+| Key          | Type      | Description
+|--------------|-----------|------------
+| `monthDate`  | `date`    | Месяц (1 число)
+| `beginRest`  | `decimal`    | Сальдо на начало периода
+| `debetTurn`  | `decimal` | Начислено КЗ
+| `creditTurn` | `decimal` | Оплачено по КЗ
+| `endRest`    | `decimal` | Сальдо на конец месяца
+
+Пример успешного ответа
+
+```json
+{
+  "monthDate": "2025-09-08T07:14:55.479Z",
+  "beginRest": 0,
+  "debetTurn": 0,
+  "creditTurn": 0,
+  "endRest": 0
+}
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Получить условия договора
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/terms>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура ответа
+
+| Key                            | Type      | Description
+|--------------------------------|-----------|------------
+| `contractNumber`               | `int`     | Номер договора
+| `contractDate`                 | `date`    | Дата заключения договора
+| `emailFlag`                    | `boolean` | Флаг формирования электронной почты
+| `emailReport`                  | `string`  | Адрес для отправки отчета с ЭЦП
+| `paymentMethod`                | `string`  | Способ оплаты 
+| `expiredDay`                   | `int`     | Отсрочка погашения задолженности (кол-во дней)
+| `discountFlag`                 | `boolean` | Флан расчета скидки
+| `discount`                     | `int`     | Код скидки
+| `loan`                         | `string`  | Коммерческий заем
+| `loanTerm`                     | `string`  | Срок коммерческого займа
+| `loanSize`                     | `string`  | Размер коммерческого займа
+| `loanCost`                     | `string`  | Стоимость коммерческого займа
+| `providerName`                 | `string`  | Наименование поставщика
+| `providerUNP`                  | `string`  | УНП поставщика
+| `providerLegalAddress`         | `string`  | Юридический адрес поставщика
+| `providerPostAddress`          | `string`  | Почтовый адрес поставщика
+| `providerSite`                 | `string`  | Сайт поставщика
+| `providerEmail`                | `string`  | Адрес электронной почты поставщика
+| `providerPhone`                | `string`  | Телефон поставщика
+| `providerAccount`              | `string`  | Расчетный счет поставщика
+| `providerBankName`             | `string`  | Наименование банка поставщика
+| `providerBankCode`             | `string`  | Код банка поставщика
+| `providerBankAddress`          | `string`  | Адрес банка поставщика
+| `customerName`                 | `string`  | Наименование покупателя
+| `customerUNP`                  | `string`  | УНП покупателя
+| `customerLegalAddress`         | `string`  | Юридический адрес покупателя
+| `customerPostAddress`          | `string`  | Почтовый адрес покупателя
+| `contrDiscountList`            | `string`  | Детальная информация по скидке
+| `contrDiscountList`/`vsCode`   | `string`  | Код нефтепродукта
+| `contrDiscountList`/`limit`    | `decimal` | Предел
+| `contrDiscountList`/`disValue` | `decimal` | Значение скидки
+| `contrDiscountList`/`disType`  | `string`  | Описание типа скидки
+| `contrDiscountList`/`oilSet`   | `string`  | Описание набора нефтепродуктов
+
+Пример успешного ответа
+
+```json
+{
+  "contractNumber": 0,
+  "contractDate": "2025-09-08T07:25:41.786Z",
+  "emailFlag": true,
+  "emailReport": "string",
+  "paymentMethod": "string",
+  "payCurrency": "string",
+  "expiredDay": 0,
+  "discountFlag": true,
+  "discount": 0,
+  "loan": "string",
+  "loanTerm": "string",
+  "loanSize": "string",
+  "loanCost": 0,
+  "providerName": "string",
+  "providerUNP": "string",
+  "providerLegalAddress": "string",
+  "providerPostAddress": "string",
+  "providerSite": "string",
+  "providerEmail": "string",
+  "providerPhone": "string",
+  "providerAccount": "string",
+  "providerBankName": "string",
+  "providerBankCode": "string",
+  "providerBankAddress": "string",
+  "customerName": "string",
+  "customerUNP": "string",
+  "customerLegalAddress": "string",
+  "customerPostAddress": "string",
+  "contrDiscountList": [
+    {
+      "vsCode": "string",
+      "limit": 0,
+      "disValue": 0,
+      "disType": "string",
+      "oilSet": "string"
+    }
+  ]
+}
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Получить транспортные средства договора
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/contractVehicles>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура ответа
+
+| Key                                            | Type      | Description
+|------------------------------------------------|-----------|------------
+| `сontrCode`                                    | `integer` | Номер карты
+| `number`                                       | `string`  | Номер автомобиля
+| `model`                                        | `string`  | Водитель
+| `gasBottleVolume`                              | `integer` | Объем газового баллона
+| `gasBottleExaminationDate`                     | `date`    | Дата освидетельствования баллона
+| `gassBottleNextExaminationDate`                | `date`    | Дата последующего освидетельствования баллона
+| `active`                                       | `boolean` | Флаг разрешения заправки авто по карте
+| `vehicleParams`                                | `array`   | Параметры автомобиля
+| `vehicleParams`/`cardCode`                     | `string`  | Номер карты
+| `vehicleParams`/`vehicleId`                    | `decimal` | Номер автомобиля
+| `vehicleParams`/`number`                       | `decimal` | Номер автомобиля
+| `vehicleParams`/`model`                        | `string`  | Водитель
+| `vehicleParams`/`gasBottleVolume`              | `integer` | Объем газового баллона
+| `vehicleParams`/`gasBottleExaminationDate`     | `date`    | Дата освидетельствования баллона
+| `vehicleParams`/`gasBottleNextExaminationDate` | `date`    | Дата последующего освидетельствования баллона
+| `vehicleParams`/`viewInReportFl`               | `boolean` | Отражать в отчетах номер авто
+
+Пример успешного ответа
+
+```json
+[
+  {
+    "id": 0,
+    "contrCode": 0,
+    "number": "string",
+    "model": "string",
+    "gasBottleVolume": 0,
+    "gasBottleExaminationDate": "2025-09-08T08:23:41.452Z",
+    "gasBottleNextExaminationDate": "2025-09-08T08:23:41.452Z",
+    "active": true,
+    "vehicleParams": [
+      {
+        "cardCode": 0,
+        "vehicleId": 0,
+        "number": "string",
+        "model": "string",
+        "gasBottleVolume": 0,
+        "gasBottleExaminationDate": "2025-09-08T08:23:41.452Z",
+        "gasBottleNextExaminationDate": "2025-09-08T08:23:41.452Z",
+        "viewInReportFl": true
+      }
+    ]
+  }
+]
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+## Отправка измененных настроек авто
+
+`PUT`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/contractVehicles>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key                            | Type      | Required | Discription
+|--------------------------------|-----------|:--------:|------------
+| `id`                           | `long`    |   Yes    | Номер карты
+| `contrCode`                    | `integer` |   Yes    | Номер карты
+| `number`                       | `string`  |   Yes    | Номер автомобиля
+| `model`                        | `string`  |   Yes    | Водитель
+| `gasBottleVolume`              | `integer` |    No    | Объем газового баллона
+| `gasBottleExaminationDate`     | `date`    |    No    | Дата освидетельствования баллона
+| `gasBottleNextExaminationDate` | `date`    |    No    | Дата последующего освидетельствования баллона
+| `active`                       | `boolen`  |   Yes    | Флаг разрешения заправки авто по карте
+| `vehicleParams`                | `array`   |   Yes    | Параметры автомобилей
+| `vehicleParams`/`cardCode`                     | `string`  | Номер карты
+| `vehicleParams`/`vehicleId`                    | `decimal` | Номер автомобиля
+| `vehicleParams`/`number`                       | `decimal` | Номер автомобиля
+| `vehicleParams`/`model`                        | `string`  | Водитель
+| `vehicleParams`/`gasBottleVolume`              | `integer` | Объем газового баллона
+| `vehicleParams`/`gasBottleExaminationDate`     | `date`    | Дата освидетельствования баллона
+| `vehicleParams`/`gasBottleNextExaminationDate` | `date`    | Дата последующего освидетельствования баллона
+| `vehicleParams`/`viewInReportFl`               | `boolean` | Отражать в отчетах номер авто
+
+Пример запроса
+
+```json
+[
+  {
+    "id": 0,
+    "contrCode": 0,
+    "number": "string",
+    "model": "string",
+    "gasBottleVolume": 0,
+    "gasBottleExaminationDate": "2025-09-08T08:44:57.189Z",
+    "gasBottleNextExaminationDate": "2025-09-08T08:44:57.189Z",
+    "active": true,
+    "vehicleParams": [
+      {
+        "cardCode": 0,
+        "vehicleId": 0,
+        "number": "string",
+        "model": "string",
+        "gasBottleVolume": 0,
+        "gasBottleExaminationDate": "2025-09-08T08:44:57.189Z",
+        "gasBottleNextExaminationDate": "2025-09-08T08:44:57.189Z",
+        "viewInReportFl": true
+      }
+    ]
+  }
+]
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+## Добавление настроек авто
+
+`PUT`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/createVehicle>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key                            | Type      | Required | Discription
+|--------------------------------|-----------|:--------:|------------
+| `id`                           | `long`    |   Yes    | Номер карты
+| `contrCode`                    | `integer` |   Yes    | Номер карты
+| `number`                       | `string`  |   Yes    | Номер автомобиля
+| `model`                        | `string`  |   Yes    | Водитель
+| `gasBottleVolume`              | `integer` |    No    | Объем газового баллона
+| `gasBottleExaminationDate`     | `date`    |    No    | Дата освидетельствования баллона
+| `gasBottleNextExaminationDate` | `date`    |    No    | Дата последующего освидетельствования баллона
+| `active`                       | `boolen`  |   Yes    | Флаг разрешения заправки авто по карте
+| `vehicleParams`                | `array`   |   Yes    | Параметры автомобилей
+| `vehicleParams`/`cardCode`                     | `string`  | Номер карты
+| `vehicleParams`/`vehicleId`                    | `decimal` | Номер автомобиля
+| `vehicleParams`/`number`                       | `decimal` | Номер автомобиля
+| `vehicleParams`/`model`                        | `string`  | Водитель
+| `vehicleParams`/`gasBottleVolume`              | `integer` | Объем газового баллона
+| `vehicleParams`/`gasBottleExaminationDate`     | `date`    | Дата освидетельствования баллона
+| `vehicleParams`/`gasBottleNextExaminationDate` | `date`    | Дата последующего освидетельствования баллона
+| `vehicleParams`/`viewInReportFl`               | `boolean` | Отражать в отчетах номер авто
+
+Пример запроса
+
+```json
+[
+  {
+    "id": 0,
+    "contrCode": 0,
+    "number": "string",
+    "model": "string",
+    "gasBottleVolume": 0,
+    "gasBottleExaminationDate": "2025-09-08T08:44:57.189Z",
+    "gasBottleNextExaminationDate": "2025-09-08T08:44:57.189Z",
+    "active": true,
+    "vehicleParams": [
+      {
+        "cardCode": 0,
+        "vehicleId": 0,
+        "number": "string",
+        "model": "string",
+        "gasBottleVolume": 0,
+        "gasBottleExaminationDate": "2025-09-08T08:44:57.189Z",
+        "gasBottleNextExaminationDate": "2025-09-08T08:44:57.189Z",
+        "viewInReportFl": true
+      }
+    ]
+  }
+]
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+## Добавление настроек авто
+
+`PUT`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/deleteVehicle>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key                            | Type      | Required | Discription
+|--------------------------------|-----------|:--------:|------------
+| `id`                           | `long`    |   Yes    | Номер карты
+| `contrCode`                    | `integer` |   Yes    | Номер карты
+| `number`                       | `string`  |   Yes    | Номер автомобиля
+| `model`                        | `string`  |   Yes    | Водитель
+| `gasBottleVolume`              | `integer` |    No    | Объем газового баллона
+| `gasBottleExaminationDate`     | `date`    |    No    | Дата освидетельствования баллона
+| `gasBottleNextExaminationDate` | `date`    |    No    | Дата последующего освидетельствования баллона
+| `active`                       | `boolen`  |   Yes    | Флаг разрешения заправки авто по карте
+| `vehicleParams`                | `array`   |   Yes    | Параметры автомобилей
+| `vehicleParams`/`cardCode`                     | `string`  | Номер карты
+| `vehicleParams`/`vehicleId`                    | `decimal` | Номер автомобиля
+| `vehicleParams`/`number`                       | `decimal` | Номер автомобиля
+| `vehicleParams`/`model`                        | `string`  | Водитель
+| `vehicleParams`/`gasBottleVolume`              | `integer` | Объем газового баллона
+| `vehicleParams`/`gasBottleExaminationDate`     | `date`    | Дата освидетельствования баллона
+| `vehicleParams`/`gasBottleNextExaminationDate` | `date`    | Дата последующего освидетельствования баллона
+| `vehicleParams`/`viewInReportFl`               | `boolean` | Отражать в отчетах номер авто
+
+Пример запроса
+
+```json
+[
+  {
+    "id": 0,
+    "contrCode": 0,
+    "number": "string",
+    "model": "string",
+    "gasBottleVolume": 0,
+    "gasBottleExaminationDate": "2025-09-08T08:44:57.189Z",
+    "gasBottleNextExaminationDate": "2025-09-08T08:44:57.189Z",
+    "active": false,
+    "vehicleParams": [
+      {
+        "cardCode": 0,
+        "vehicleId": 0,
+        "number": "string",
+        "model": "string",
+        "gasBottleVolume": 0,
+        "gasBottleExaminationDate": "2025-09-08T08:44:57.189Z",
+        "gasBottleNextExaminationDate": "2025-09-08T08:44:57.189Z",
+        "viewInReportFl": true
+      }
+    ]
+  }
+]
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Получить информацию о баннере
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/banners>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Структура ответа
+
+| Key             | Type      | Description
+|-----------------|-----------|------------
+| `doseForPeriod` | `decimal` | Доза за период
+| `benefit`       | `decimal` | Выгода
+| `summForPeriod` | `decimal` | Сумма за период
+| `periodBegin`   | `date`    | Начало периода
+| `periodEnd`     | `date`    | Конец периода
+
+```json
+[
+{
+"doseForPeriod": 0,
+"benefit": 0,
+"summForPeriod": 0,
+"periodBegin": "2025-09-08T10:47:45.097Z",
+"periodEnd": "2025-09-08T10:47:45.097Z"
+}
+]
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+## Получить информацию о баннере
+
+`PUT`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/banners>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key                | Type      | Required | Discription
+|--------------------|-----------|:--------:|------------
+| `contractId`       | `integer` |    No    | Номер договора
+| `contractIssuerId` | `integer` |   Yes    | ID эмитента договора
+| `viewDate`         | `date`    |    No    | Дата отображения
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### AcceptanceCertificate document
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Acceptance>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Параметры запроса
+
+| Key        | Type     |Discription
+|------------|----------|------------
+| `date`     | `date`   | Дата
+| `filename` | `string` | Filename
+
+Структура ответа
+
+byte[]
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### AcceptanceCertificate. Get filename list.
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/AcceptanceList>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Параметры запроса
+
+| Key        | Type     |Discription
+|------------|----------|------------
+| `date`     | `date`   | Дата
+
+Структура ответа
+
+ArrayList
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Получить опции настроек по умолчанию
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Catalog/options>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Структура ответа
+
+| Key       | Type      | Description
+|-----------|-----------|------------
+| `percent` | `decimal` | Процент
+
+```json
+{
+"percent": 5
+}
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Получить информацию о валюте по умолчанию
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Catalog/currency>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Структура ответа
+
+| Key          | Type      | Description
+|--------------|-----------|------------
+| `code`       | `integer` | Код валюты
+| `letterCode` | `string`  | Буквенный код валюты
+| `name`       | `string`  | Наименование валюты
+| `symbol`     | `string`  | Символьный код валюты
+
+```json
+{
+  "code": 840,
+  "letterCode": "USD",
+  "name": "Доллар США",
+  "symbol": "USD"
+}
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+### Акт сверки
+
+`POST`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/CheckAccount>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key                | Type      | Required | Description
+|--------------------|-----------|:--------:|------------
+| `startDate`        | `date`    |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
+| `endDate`          | `date`    |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
+
+Пример запроса
+
+```json
+{
+  "startDate": "2025-09-08T06:47:06.839Z",
+  "endDate": "2025-09-09T06:47:06.839Z"
+}
+```
+
+Структура ответа
+
+| Key                                       | Type     | Description
+|-------------------------------------------|----------|------------
+| `periodBegin`                             | `date`   | Дата начала периода 
+| `periodEnd`                               | `date`   | Дата окончания периода
+| `memberCode`                              | `long`   | Код эмитента
+| `memberName`                              | `string` | Наименование эмитента
+| `memberUnp`                               | `string` | УНП эмитента
+| `contractCode`                            | `long`   | Номер договора
+| `contractBeginDate`                       | `date`   | Дата старта договора
+| `contractName`                            | `string` | Наименование договора
+| `сontractUnp`                             | `string` | УНП договора
+| `checkAccountTableRowData`                | `array`  | Счета договора
+| `checkAccountTableRowData`/`documentDate` | `string` | Дата документа
+| `checkAccountTableRowData`/`description`  | `string` | Наименование документа
+| `checkAccountTableRowData`/`debet`        | `double` | Дебет
+| `checkAccountTableRowData`/`credit`       | `double` | Кредит
+
+Пример успешного ответа
+
+```json
+{
+  "periodBegin": "2025-09-08T11:02:28.062Z",
+  "periodEnd": "2025-09-08T11:02:28.062Z",
+  "memberCode": 0,
+  "memberName": "string",
+  "memberUnp": "string",
+  "contractCode": 0,
+  "contractBeginDate": "2025-09-08T11:02:28.062Z",
+  "contractName": "string",
+  "contractUnp": "string",
+  "checkAccountTableRowData": [
+    {
+      "documentDate": "string",
+      "description": "string",
+      "debet": 0,
+      "credit": 0
+    }
+  ]
+}
+```
+
+HTTP статусы ответа
+
+| Code | Description |
+|------|-------------|
+| 200  | OK          |
+| 400  | Bad request |
+| 401  | Unauthorized |
+| 500  | Internal Server Error |
+
+### Получить шаблон договора
+
+`POST`: <https://ssl.beloil.by/rcp/i/api/v3/ContractTemplate>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key     | Type     | Required | Description
+|---------|----------|:--------:|------------
+| `name`  | `string` |   Yes    | Наименование
+| `value` | `string` |   Yes    | Значение
+
+Пример запроса
+
+```json
+[
+  {
+    "name": "string",
+    "value": "string"
+  }
+]
+```
+
+Структура ответа
+
+| Key            | Type      | Description
+|----------------|-----------|------------
+| `templateType` | `integer` | Тип шаблона
+| `fileName`     | `string`  | Имя файла
+| `text`         | `string`  | Текст шаблона
+| `binaryData`   | `bytes`   | Шаблон
+
+Пример успешного ответа
+
+```json
+{
+  "templateType": 0,
+  "fileName": "string",
+  "text": "string",
+  "binaryData": "string"
+}
+```
+
+HTTP статусы ответа
+
+| Code | Description |
+|------|-------------|
+| 200  | OK          |
+| 400  | Bad request |
+| 401  | Unauthorized |
+| 500  | Internal Server Error |
+
+### Акт сверки. Процедура обновления флага.
+
+`POST`: <https://ssl.beloil.by/rcp/i/api/v3/ElectronicCheck>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key                         | Type      | Required | Description
+|-----------------------------|-----------|:--------:|------------
+| `isElectronicCheck`         | `integer` |   Yes    | Флаг о согласии на электронные чеки
+| `noReminderElectronicCheck` | `integer` |   Yes    | Флаг напоминания
+
+Пример запроса
+
+```json
+{
+  "isElectronicCheck": 0,
+  "noReminderElectronicCheck": 0
+}
+```
+
+Структура ответа
+
+int
+
+HTTP статусы ответа
+
+| Code | Description |
+|------|-------------|
+| 200  | OK          |
+| 400  | Bad request |
+| 401  | Unauthorized |
+| 500  | Internal Server Error |
+
+### Сохранение настроек оповещения о минимальной сумме на счете.
+
+`PUT`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/NoticeInfo>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key                        | Type      | Required | Description
+|----------------------------|-----------|:--------:|------------
+| `emitent`                  | `integer` |   Yes    | Номер эмитента
+| `contrCode`                | `integer` |   Yes    | Номер договора
+| `minimumBalanceNoticeFlag` | `bool`    |   Yes    | Флаг отправки уведомления о достижении минимального баланса
+| `minimumBalanceSumm`       | `decimal` |   Yes    | Сумма минимального баланса
+
+Пример запроса
+
+```json
+{
+  "emitent": 0,
+  "contrCode": 0,
+  "minimumBalanceNoticeFlag": true,
+  "minimumBalanceSumm": 0
+}
+```
+
+Структура ответа
+
+int
+
+HTTP статусы ответа
+
+| Code | Description |
+|------|-------------|
+| 200  | OK          |
+| 400  | Bad request |
+| 401  | Unauthorized |
+| 500  | Internal Server Error |
+
+### Движение денежных средств по договору
+
+`POST`: <https://ssl.beloil.by/rcp/i/api/v3/PaymentReport>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура запроса
+
+| Key         | Type   | Required | Description
+|-------------|--------|:--------:|------------
+| `startDate` | `date` |   Yes    | Дата начала периода в формате `MM-DD-YYYY`
+| `endDate`   | `date` |   Yes    | Дата конца периода в формате `MM-DD-YYYY`
+| `contractId`       | `integer` |   Yes    | Номер договора
+| `contractIssuerId` | `integer` |   Yes    | ID эмитента договора
+| `cardNumber`       | `integer` |   Yes    | Номер топливной карты. Если значение меньше либо равно нулю, тогда отчет по всем картам договора
+| `subDivisnNumber`  | `integer` |   Yes    | Номер подразделения. Если значение меньше нуля, тогда отчет по всем подразделениям договора
+| `flChoice`         | `integer` |   Yes    | Параметр `FlChoice` - флаг выбора информации: `1` - топливо, `2` - оплата дорог, `4` - иные товары (услуги), `3` - топливо и оплата дорог, `5` - топливо и иные товары (услуги), `6` -  оплата дорог и иные товары (услуги), `7` - топливо, оплата дорог и иные товары (услуги)
+| `author`           | `string`  |    No    | Автор изменений 
+| `emtCodeFrm`       | `integer` |    No    | Код эмитента, если меньше нуля, то по всем подразделениям
+| `azsCode`          | `integer` |    No    | Номер азс, если меньше нуля, то по всем подразделениям
+
+Пример запроса
+
+```json
+{
+  "startDate": "2025-09-08T07:05:28.924Z",
+  "endDate": "2025-09-08T07:05:28.924Z",
+  "contractId": 0,
+  "contractIssuerId": 0,
+  "flChoice": 0,
+  "cardNumber": 0,
+  "subDivisnNumber": 0,
+  "discountCode": 0,
+  "author": "string",
+  "emtCodeFrm": 0,
+  "azsCode": 0
+}
+```
+
+Структура ответа
+
+| Key            | Type      | Description
+|----------------|-----------|------------
+| `PayDate` | `integer` | Дата платежа
+| `PayDocument`     | `string`  | Номер документа выписки 
+| `PaySum`         | `string`  | Сумма платежа
+
+Пример успешного ответа
+
+```json
+[
+  {
+    "payDate": "2025-09-08T12:01:31.099Z",
+    "payDocument": "string",
+    "paySum": 0
+  }
+]
+```
+
+HTTP статусы ответа
+
+| Code | Description |
+|------|-------------|
+| 200  | OK          |
+| 400  | Bad request |
+| 401  | Unauthorized |
+| 500  | Internal Server Error |
+
+### Получение файлов отчетов. Параметры:
+### doctype - тип документа. 1 - НТУ-АЗС; 2 - Количество и стоимость отпущенный нефлепродуктов, товаров и услуг   
+### date - дата отчета в формате ггггмм
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Report>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+
+Параметры запроса
+
+| Key       | Type      |Discription
+|-----------|-----------|------------
+| `doctype` | `integer` | Тип документа
+| `date`    | `string`  | Дата
+
+Структура ответа
+
+byte[]
 
 HTTP статусы ответа
 
