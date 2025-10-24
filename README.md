@@ -106,6 +106,27 @@ HTTP статусы ответа
 | `gasRulesAccepted`             | `boolean`  | Флаг ознакомления с правилами
 | `pinCode`                      | `integer`  | Пинкод карты
 | `roadTollsFl`                  | `boolean`  | Флаг оплаты дорог
+| `vehicleParams`                                | `array`    |    No    | Параметры автомобилей
+| `vehicleParams`/`cardCode`                     | `integer`  |    No    | Номер карты
+| `vehicleParams`/`vehicleId`                    | `long`     |   Yes    | Номер автомобиля
+| `vehicleParams`/`number`                       | `string`   |    No    | Номер автомобиля
+| `vehicleParams`/`model`                        | `string`   |    No    | Водитель
+| `vehicleParams`/`gasBottleVolume`              | `integer`  |    No    | объем газового баллона
+| `vehicleParams`/`gasBottleExaminationDate`     | `date`     |    No    | дата освидетельствования баллона
+| `vehicleParams`/`gasBottleNextExaminationDate` | `date`     |    No    | дата последующего освидетельствования баллона
+| `vehicleParams`/`viewInReportFl`               | `boolen`   |   Yes    | отражать в отчетах номер авто
+| `cardDrivers`/`id`                             | `guid`     |   Yes    | id
+| `cardDrivers`/`contrCode`                      | `int`      |   Yes    | номер договора
+| `cardDrivers`/`lastname`                       | `string`   |   Yes    | фамилия
+| `cardDrivers`/`firstname`                      | `string`   |   Yes    | имя
+| `cardDrivers`/`patronymic`                     | `string`   |   Yes    | отчество
+| `cardDrivers`/`viewInReportFl`                 | `boolen`   |   Yes    | отражать в отчетах водителя
+| `cardDrivers`/`cards`                          | `int`      |   Yes    | список карт привязанных к водителю
+| `cardServiceTime`                                     | `array`    |   Yes    | список периодов обслуживания, если пусто, то карта не обслуживается
+                                                                                | для постоянного обслуживания 7 элементов с 00:00:00 по 24:00:00
+| `cardServiceTime`/`dayOfTheWeek`                      | `int`      |   Yes    | день недели 1-пн - 7-вс
+| `cardServiceTime`/`serviceTimePeriods`/`periodBegin`  | `datetime` |   Yes    | время начала периода обслуживания
+| `cardServiceTime`/`serviceTimePeriods`/`periodEnd`    | `datetime` |   Yes    | время завершения периода обслуживания
 
 Кодировка группы нефтепродуктов ключа `oilGroupSet`
 | Бит | Группа
@@ -170,7 +191,95 @@ HTTP статусы ответа
           "viewInReportFl": true
         }
       ],
-      "roadTollsFl": true
+      "roadTollsFl": true,
+      "cardServiceTime": [
+      {
+        "dayOfTheWeek": 4,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "24:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 1,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "07:00:00",
+            "periodEnd": "19:00:00"
+          },
+          {
+            "periodBegin": "23:00:00",
+            "periodEnd": "24:00:00"
+          },
+          {
+            "periodBegin": "21:00:00",
+            "periodEnd": "22:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 2,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "07:00:00",
+            "periodEnd": "19:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 7,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "24:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 6,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "04:00:00"
+          },
+          {
+            "periodBegin": "10:00:00",
+            "periodEnd": "12:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 5,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "24:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 3,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "24:00:00"
+          }
+        ]
+      }
+    ],
+    "cardDrivers": [
+      {
+        "id": "8a8816b4-89ca-45a7-8dc0-9ce45aefdb6c",
+        "contrCode": 3700009,
+        "lastname": "l",
+        "firstname": "f",
+        "patronymic": ".",
+        "viewInReportFl": false,
+        "cards": null
+      }
+    ]
     }
 ]
 ```
@@ -235,6 +344,18 @@ HTTP статусы ответа
 | `vehicleParams`/`gasBottleExaminationDate`     | `date`     |    No    | дата освидетельствования баллона
 | `vehicleParams`/`gasBottleNextExaminationDate` | `date`     |    No    | дата последующего освидетельствования баллона
 | `vehicleParams`/`viewInReportFl`               | `boolen`   |   Yes    | отражать в отчетах номер авто
+| `cardDrivers`/`id`                             | `guid`     |   Yes    | id
+| `cardDrivers`/`contrCode`                      | `int`      |   Yes    | номер договора
+| `cardDrivers`/`lastname`                       | `string`   |   Yes    | фамилия
+| `cardDrivers`/`firstname`                      | `string`   |   Yes    | имя
+| `cardDrivers`/`patronymic`                     | `string`   |   Yes    | отчество
+| `cardDrivers`/`viewInReportFl`                 | `boolen`   |   Yes    | отражать в отчетах водителя
+| `cardDrivers`/`cards`                          | `int`      |   Yes    | список карт привязанных к водителю
+| `cardServiceTime`                                     | `array`    |   Yes    | список периодов обслуживания, если пусто, то карта не обслуживается
+                                                                                | для постоянного обслуживания 7 элементов с 00:00:00 по 24:00:00
+| `cardServiceTime`/`dayOfTheWeek`                      | `int`      |   Yes    | день недели 1-пн - 7-вс
+| `cardServiceTime`/`serviceTimePeriods`/`periodBegin`  | `datetime` |   Yes    | время начала периода обслуживания
+| `cardServiceTime`/`serviceTimePeriods`/`periodEnd`    | `datetime` |   Yes    | время завершения периода обслуживания
 
 Кодировка группы нефтепродуктов в поле `oilGroupSet`
 | Бит | Группа
@@ -299,7 +420,95 @@ HTTP статусы ответа
           "viewInReportFl": true
         }
       ],
-      "roadTollsFl": true
+      "roadTollsFl": true,
+      "cardServiceTime": [
+      {
+        "dayOfTheWeek": 4,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "24:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 1,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "07:00:00",
+            "periodEnd": "19:00:00"
+          },
+          {
+            "periodBegin": "23:00:00",
+            "periodEnd": "24:00:00"
+          },
+          {
+            "periodBegin": "21:00:00",
+            "periodEnd": "22:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 2,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "07:00:00",
+            "periodEnd": "19:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 7,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "24:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 6,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "04:00:00"
+          },
+          {
+            "periodBegin": "10:00:00",
+            "periodEnd": "12:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 5,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "24:00:00"
+          }
+        ]
+      },
+      {
+        "dayOfTheWeek": 3,
+        "serviceTimePeriods": [
+          {
+            "periodBegin": "00:00:00",
+            "periodEnd": "24:00:00"
+          }
+        ]
+      }
+    ],
+    "cardDrivers": [
+      {
+        "id": "8a8816b4-89ca-45a7-8dc0-9ce45aefdb6c",
+        "contrCode": 3700009,
+        "lastname": "l",
+        "firstname": "f",
+        "patronymic": ".",
+        "viewInReportFl": false,
+        "cards": null
+      }
+    ]
     }
 ]
 ```
@@ -1609,6 +1818,112 @@ HTTP статусы ответа
 | 400  | Bad request
 | 401  | Unauthorized
 | 500  | Internal Server Error
+
+
+
+### Получить водителей договора
+
+`GET`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/contractDrivers>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура ответа
+
+| Key                                            | Type      | Description
+|------------------------------------------------|-----------|------------
+| `id`                                           | `guid`    | Id
+| `contrCode`                                    | `int`     | Номер договора
+| `lastname`                                     | `string`  | Фамилия
+| `firstname`                                    | `string`  | Имя
+| `patronymic`                                   | `string`  | Отчество
+| `viewInReportFl`                               | `bool`    | Выводит в отчет
+| `cards\`                                       | `int`     | Перечень номеров карт привязанных к водителю
+
+
+Пример успешного ответа
+
+```json
+[
+  {
+    "id": "9d3ed6a8-8233-4fe4-be83-ad6f034bac00",
+    "contrCode": 111,
+    "lastname": "Will",
+    "firstname": "Smith",
+    "patronymic": "...",
+    "viewInReportFl": false,
+    "cards": [
+      373000189
+    ]
+  }
+]
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+
+### Сохранить водителей договора
+
+`PUT`: <https://ssl.beloil.by/rcp/i/api/v3/Contract/contractDrivers>
+
+Заголовки
+
+* `Authorization`: `Bearer <токен>`
+* `Content-Type`: `application/json`
+
+Структура ответа
+
+| Key                                            | Type      | Description
+|------------------------------------------------|-----------|------------
+| `id`                                           | `guid`    | Id
+| `contrCode`                                    | `int`     | Номер договора
+| `lastname`                                     | `string`  | Фамилия
+| `firstname`                                    | `string`  | Имя
+| `patronymic`                                   | `string`  | Отчество
+| `viewInReportFl`                               | `bool`    | Выводит в отчет
+| `cards\`                                       | `int`     | Перечень номеров карт привязанных к водителю
+
+
+Пример успешного ответа
+
+```json
+[
+  {
+    "id": "9d3ed6a8-8233-4fe4-be83-ad6f034bac00",
+    "contrCode": 111,
+    "lastname": "Will",
+    "firstname": "Smith",
+    "patronymic": "...",
+    "viewInReportFl": false,
+    "cards": [
+      373000189,
+      373000111
+    ]
+  }
+]
+```
+
+HTTP статусы ответа
+
+| Code | Description
+|------|------------
+| 200  | OK
+| 400  | Bad request
+| 401  | Unauthorized
+| 500  | Internal Server Error
+
+
+
+
 
 ### Получить информацию о баннере
 
